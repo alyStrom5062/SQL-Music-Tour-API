@@ -11,7 +11,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    // note that this deletes ALL data from the bands table
     await queryInterface.bulkDelete("bands", null, {})
   }
 }

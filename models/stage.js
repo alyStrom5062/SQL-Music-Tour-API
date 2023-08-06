@@ -1,9 +1,25 @@
-"use strict"
-const {
-  Model
-} = require("sequelize");
+'use strict'
+
+// DEPENDENCIES
+const { Model } = require('sequelize');
+
+// MODELS
 module.exports = (sequelize, DataTypes) => {
-  class Stage extends Model {};
+  class Stage extends Model {
+    static associate({ Event, StageEvent, SetTime }) {
+      Stage.belongsToMany(Event, {
+        foreignKey: "stage_id",
+        as: "events",
+        through: StageEvent
+      });
+      Stage.hasMany(SetTime, {
+        foreignKey: "stage_id",
+        as: "set_times"
+      });
+    };
+  };
+
+  // CONFIGURE
   Stage.init({
     stage_id: {
       type: DataTypes.INTEGER,
@@ -16,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: "Stage",
-    tableName: "stages",
+    modelName: 'Stage',
+    tableName: 'stages',
     timestamps: false
-  })
-  return Stage
-}
+  });
+  return Stage;
+};

@@ -1,9 +1,28 @@
-"use strict"
-const {
-  Model
-} = require("sequelize");
+'use strict'
+
+// DEPENDENCIES
+const { Model } = require('sequelize');
+
+// MODELS
 module.exports = (sequelize, DataTypes) => {
-  class SetTime extends Model {};
+  class SetTime extends Model {
+    static associate({ Band, Event, Stage }) {
+      SetTime.belongsTo(Band, {
+        foreignKey: "band_id",
+        as: "band"
+      });
+      SetTime.belongsTo(Event, {
+        foreignKey: "event_id",
+        as: "event"
+      });
+      SetTime.belongsTo(Stage, {
+        foreignKey: "stage_id",
+        as: "stage"
+      });
+    };
+  };
+
+  // CONFIGURE
   SetTime.init({
     set_time_id: {
       type: DataTypes.INTEGER, 
@@ -32,9 +51,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: "SetTime",
-    tableName: "set_times",
+    modelName: 'SetTime',
+    tableName: 'set_times',
     timestamps: false
-  })
-  return SetTime
-}
+  });
+  return SetTime;
+};

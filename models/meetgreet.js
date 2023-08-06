@@ -1,11 +1,24 @@
-"use strict"
-const {
-  Model
-} = require("sequelize");
+'use strict'
+
+// DEPENDENCIES
+const { Model } = require('sequelize');
+
+// MODELS
 module.exports = (sequelize, DataTypes) => {
+  class MeetGreet extends Model {
+    static associate({ Band, Event }) {
+      MeetGreet.belongsTo(Band, {
+        foreignKey: "band_id",
+        as: "band"
+      });
+      MeetGreet.belongsTo(Event, {
+        foreignKey: "event_id",
+        as: "event"
+      });
+    };
+  };
 
-  class MeetGreet extends Model {};
-
+  // CONFIGURE
   MeetGreet.init({
     meet_greet_id: {
       type: DataTypes.INTEGER,
@@ -30,9 +43,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: "MeetGreet",
-    tableName: "meet_greets",
+    modelName: 'MeetGreet',
+    tableName: 'meet_greets',
     timestamps: false
   })
-  return MeetGreet
-}
+  return MeetGreet;
+};

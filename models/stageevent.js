@@ -1,9 +1,15 @@
-"use strict"
-const {
-  Model
-} = require("sequelize")
+'use strict'
+
+// DEPENDENCIES
+const { Model } = require('sequelize');
+
+// MODELS
 module.exports = (sequelize, DataTypes) => {
-  class StageEvent extends Model {};
+  class StageEvent extends Model {
+    static associate(models) {};
+};
+
+// CONFIGURE
   StageEvent.init({
     stage_events_id: {
       type: DataTypes.INTEGER,
@@ -20,9 +26,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: "StageEvent",
-    tableName: "stage_events",
+    modelName: 'StageEvent',
+    tableName: 'stage_events',
     timestamps: false,
-  })
-  return StageEvent
-}
+  });
+  return StageEvent;
+};

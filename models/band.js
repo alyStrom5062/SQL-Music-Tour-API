@@ -1,9 +1,26 @@
-// DEPENDENCIES
-const { Sequelize, DataTypes,  Model } = require("sequelize")
+'use strict'
 
-// MODEL
-class Band extends Model {};
-Band.init({
+// DEPENDENCIES
+const { Model } = require('sequelize');
+
+// MODELS
+module.exports = (sequelize, DataTypes) => {
+  class Band extends Model {
+
+    static associate({ MeetGreet, SetTime }) {
+      Band.hasMany(MeetGreet, {
+        foreignKey: "band_id",
+        as: "meet_greets"
+      });
+      Band.hasMany(SetTime, {
+        foreignKey: "band_id",
+        set_times: "set_times"
+      });
+    };
+  };
+
+  // CONFIGURE
+  Band.init({
     band_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -27,11 +44,9 @@ Band.init({
     }
   }, {
     sequelize,
-    modelName: "Band",
-    tableName: "bands",
+    modelName: 'Band',
+    tableName: 'bands',
     timestamps: false
-  })
-
-
-// EXPORT
-module.exports = Band
+  });
+  return Band;
+};
